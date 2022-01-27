@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'screens/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,11 +16,40 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Random Meme Viewer',
-      home: RandomMemes(),
+    return MaterialApp(
+      title: 'Flutter Authentication',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.blue,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(
+              fontSize: 24.0,
+            ),
+            padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
+          ),
+        ),
+        textTheme: TextTheme(
+          headline1: TextStyle(
+            fontSize: 46.0,
+            color: Colors.blue.shade700,
+            fontWeight: FontWeight.w500,
+          ),
+          bodyText1: TextStyle(fontSize: 18.0),
+        ),
+      ),
+      home: LoginPage(),
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return const MaterialApp(
+  //     title: 'Random Meme Viewer',
+  //     home: RandomMemes(),
+  //   );
+  // }
 }
 
 class RandomMemes extends StatefulWidget {
@@ -36,11 +66,11 @@ class _RandomMemesState extends State<RandomMemes> {
   @override
   void initState() {
     super.initState();
-    fetchFive();
+    fetch();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        fetchFive();
+        fetch();
       }
     });
   }
@@ -94,9 +124,5 @@ class _RandomMemesState extends State<RandomMemes> {
       // then throw an exception.
       throw Exception('Failed to load meme');
     }
-  }
-
-  fetchFive() {
-    fetch();
   }
 }
