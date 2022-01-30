@@ -124,14 +124,16 @@ class _ProfilePageState extends State<ProfilePage> {
                 ? CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: () async {
-                      setState(() {
-                        _isMemePage = true;
-                      });
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (context) => RandomMemes(),
-                        ),
-                      );
+                      if (_currentUser.emailVerified) {
+                        setState(() {
+                          _isMemePage = true;
+                        });
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => RandomMemes(),
+                          ),
+                        );
+                      }
                     },
                     child: Text('View Memes'),
                     style: ElevatedButton.styleFrom(
